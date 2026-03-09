@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Skue Labs</title>
+  <meta name="description" content="Privacy policy for Skue Labs and the Skue: Bulk Order Form Shopify app.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>S</text></svg>">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafafa;
+      --text: #1a1a1a;
+      --muted: #666;
+      --accent: #219cb5;
+      --border: #e5e5e5;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 24px 0;
+    }
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    nav a.nav-link {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    nav a.nav-link:hover { color: var(--text); }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .updated {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+
+    p, li {
+      font-size: 15px;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    ul {
+      padding-left: 24px;
+      margin-bottom: 16px;
+    }
+    li { margin-bottom: 6px; }
+
+    a { color: var(--accent); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+    footer .copy {
+      font-size: 13px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="logo">Skue<span>Labs</span></a>
+    <a href="/" class="nav-link">&larr; Home</a>
+  </nav>
+
+  <main>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: March 9, 2025</p>
+
+    <p>Skue Labs LLC ("we", "us", or "our") operates the <strong>Skue: Bulk Order Form</strong> application (the "App") for Shopify. This Privacy Policy explains what information we collect, how we use it, and your choices regarding that information.</p>
+
+    <h2>1. Information We Collect</h2>
+    <p>When a merchant installs the App, we receive and store the following information from Shopify:</p>
+    <ul>
+      <li><strong>Store information:</strong> Shop name, domain, and Shopify plan details provided during the OAuth installation flow.</li>
+      <li><strong>Product data:</strong> Product titles, handles, variants, prices, inventory levels, and images — accessed via the Shopify Admin API to render the order form.</li>
+      <li><strong>App configuration:</strong> Settings the merchant configures within the App (column visibility, branding, delivery windows, order templates, profiles).</li>
+    </ul>
+    <p>We do <strong>not</strong> collect personal information from the merchant's customers. The App operates on the storefront using data provided by Shopify's Liquid templates and public APIs. No customer names, email addresses, payment details, or browsing behavior are collected or stored by the App.</p>
+
+    <h2>2. How We Use Information</h2>
+    <p>We use the information described above solely to:</p>
+    <ul>
+      <li>Provide and operate the App's features (order form, pricing display, templates).</li>
+      <li>Store merchant configuration preferences so the App functions correctly.</li>
+      <li>Authenticate API requests between the storefront and our server.</li>
+      <li>Diagnose and fix technical issues.</li>
+    </ul>
+
+    <h2>3. Data Storage &amp; Security</h2>
+    <p>App configuration and session data are stored in a PostgreSQL database hosted on Fly.io with encrypted connections. Access tokens provided by Shopify are stored securely and used only to make authorized API calls on the merchant's behalf.</p>
+
+    <h2>4. Third-Party Sharing</h2>
+    <p>We do <strong>not</strong> sell, rent, or share merchant or customer data with third parties. Data is only transmitted between the App, Shopify's APIs, and our hosting infrastructure as required to operate the App.</p>
+
+    <h2>5. Data Retention</h2>
+    <p>We retain merchant configuration data for as long as the App is installed. When a merchant uninstalls the App, we delete their configuration data and access tokens within 30 days of receiving the uninstall webhook from Shopify.</p>
+
+    <h2>6. Merchant Rights</h2>
+    <p>Merchants may request access to, correction of, or deletion of their data at any time by contacting us. We will respond to verified requests within 30 days.</p>
+
+    <h2>7. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. If we make material changes, we will update the "Last updated" date above. Continued use of the App after changes constitutes acceptance of the updated policy.</p>
+
+    <h2>8. Contact</h2>
+    <p>If you have questions about this Privacy Policy or our data practices, please contact us at:</p>
+    <p>
+      <strong>Skue Labs LLC</strong><br>
+      Email: <a href="mailto:support@skuelabs.com">support@skuelabs.com</a>
+    </p>
+  </main>
+
+  <footer>
+    <span class="copy">&copy; 2025 Skue Labs LLC. All rights reserved.</span>
+  </footer>
+
+</body>
+</html>

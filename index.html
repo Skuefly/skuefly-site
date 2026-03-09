@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skue Labs — B2B Order Tools for Shopify</title>
+  <meta name="description" content="Skue Labs builds wholesale and B2B ordering tools for Shopify Plus merchants. Our flagship app, Skue: Bulk Order Form, gives dealers a fast, spreadsheet-style ordering experience.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>S</text></svg>">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafafa;
+      --text: #1a1a1a;
+      --muted: #666;
+      --accent: #219cb5;
+      --accent-hover: #1a7f94;
+      --card-bg: #fff;
+      --border: #e5e5e5;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 24px 24px 0;
+    }
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    nav a.nav-link {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav a.nav-link:hover { color: var(--text); }
+
+    /* Hero */
+    .hero {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 40px;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .hero-cta:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Features */
+    .features {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer .copy {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    footer .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    footer .footer-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    footer .footer-links a:hover { color: var(--text); }
+
+    @media (max-width: 600px) {
+      .hero { padding: 64px 24px 48px; }
+      .features { padding: 0 24px 64px; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="logo">Skue<span>Labs</span></a>
+    <div style="display:flex;gap:24px;">
+      <a href="mailto:support@skuelabs.com" class="nav-link">Contact</a>
+      <a href="/privacy" class="nav-link">Privacy</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>B2B ordering,<br>built for Shopify</h1>
+    <p>Skue Labs builds tools that help wholesale brands give their dealers a fast, professional ordering experience — right inside the storefront they already use.</p>
+    <a href="https://apps.shopify.com" class="hero-cta">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      View on Shopify App Store
+    </a>
+  </section>
+
+  <section class="features">
+    <div class="feature-card">
+      <div class="feature-icon">&#9889;</div>
+      <h3>Bulk Order Form</h3>
+      <p>A spreadsheet-style grid that lets dealers add dozens of products to cart in seconds. Variant selectors, quantity rules, and search built in.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128200;</div>
+      <h3>MAP &amp; Margin Display</h3>
+      <p>Show retail prices alongside dealer cost so buyers see their margin at a glance. Powered by Admin API for accurate pricing on B2B catalogs.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">&#128230;</div>
+      <h3>Starter Orders</h3>
+      <p>Pre-built templates and CSV upload let new dealers place their first order with a curated product mix — no guesswork needed.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span class="copy">&copy; 2025 Skue Labs LLC. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="/privacy">Privacy Policy</a>
+      <a href="mailto:support@skuelabs.com">support@skuelabs.com</a>
+    </div>
+  </footer>
+
+</body>
+</html>
