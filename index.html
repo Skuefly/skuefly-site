@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skue Labs — B2B Order Tools for Shopify</title>
   <meta name="description" content="Skue Labs builds wholesale and B2B ordering tools for Shopify Plus merchants. Our flagship app, Skue: Bulk Order Form, gives dealers a fast, spreadsheet-style ordering experience.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>S</text></svg>">
+  <link rel="icon" href="/skue-icon.png" type="image/png">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -13,8 +13,9 @@
       --bg: #fafafa;
       --text: #1a1a1a;
       --muted: #666;
-      --accent: #219cb5;
-      --accent-hover: #1a7f94;
+      --accent: #b5d43b;
+      --accent-hover: #9fba2f;
+      --accent-dark: #8aa328;
       --card-bg: #fff;
       --border: #e5e5e5;
       --radius: 12px;
@@ -38,13 +39,27 @@
       padding: 24px 24px 0;
     }
     .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+    }
+    .logo-text {
       font-size: 20px;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: var(--text);
-      text-decoration: none;
     }
-    .logo span { color: var(--accent); }
+    .logo-text span { color: var(--accent-dark); }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
     nav a.nav-link {
       font-size: 14px;
       color: var(--muted);
@@ -77,7 +92,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--accent);
+      background: var(--text);
       color: #fff;
       font-size: 16px;
       font-weight: 600;
@@ -87,7 +102,7 @@
       transition: background 0.2s, transform 0.15s;
     }
     .hero-cta:hover {
-      background: var(--accent-hover);
+      background: #333;
       transform: translateY(-1px);
     }
 
@@ -107,8 +122,23 @@
       padding: 32px;
     }
     .feature-icon {
-      font-size: 28px;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-bottom: 16px;
+    }
+    .feature-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: #1a1a1a;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
     .feature-card h3 {
       font-size: 18px;
@@ -119,6 +149,84 @@
       font-size: 15px;
       color: var(--muted);
       line-height: 1.5;
+    }
+
+    /* Contact */
+    .contact {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+    }
+    .contact h2 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .contact .sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 32px;
+    }
+    .contact form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .contact label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .contact input,
+    .contact textarea {
+      font-family: inherit;
+      font-size: 15px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .contact input:focus,
+    .contact textarea:focus {
+      border-color: var(--accent);
+    }
+    .contact textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    .contact button {
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 14px 32px;
+      background: var(--text);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .contact button:hover {
+      background: #333;
+      transform: translateY(-1px);
+    }
+    .contact .success {
+      display: none;
+      text-align: center;
+      padding: 24px;
+      background: #f0f7e4;
+      border-radius: 8px;
+      color: var(--accent-dark);
+      font-weight: 600;
     }
 
     /* Footer */
@@ -152,6 +260,7 @@
     @media (max-width: 600px) {
       .hero { padding: 64px 24px 48px; }
       .features { padding: 0 24px 64px; }
+      .contact { padding: 0 24px 64px; }
       footer { flex-direction: column; align-items: flex-start; }
     }
   </style>
@@ -159,9 +268,12 @@
 <body>
 
   <nav>
-    <a href="/" class="logo">Skue<span>Labs</span></a>
-    <div style="display:flex;gap:24px;">
-      <a href="mailto:support@skuelabs.com" class="nav-link">Contact</a>
+    <a href="/" class="logo">
+      <img src="/skue-icon.png" alt="Skue" width="36" height="36">
+      <span class="logo-text">Skue<span>Labs</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#contact" class="nav-link">Contact</a>
       <a href="/privacy" class="nav-link">Privacy</a>
     </div>
   </nav>
@@ -177,29 +289,76 @@
 
   <section class="features">
     <div class="feature-card">
-      <div class="feature-icon">&#9889;</div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      </div>
       <h3>Bulk Order Form</h3>
       <p>A spreadsheet-style grid that lets dealers add dozens of products to cart in seconds. Variant selectors, quantity rules, and search built in.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">&#128200;</div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+      </div>
       <h3>MAP &amp; Margin Display</h3>
       <p>Show retail prices alongside dealer cost so buyers see their margin at a glance. Powered by Admin API for accurate pricing on B2B catalogs.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">&#128230;</div>
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+      </div>
       <h3>Starter Orders</h3>
       <p>Pre-built templates and CSV upload let new dealers place their first order with a curated product mix — no guesswork needed.</p>
     </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2>Get in touch</h2>
+    <p class="sub">Questions about Skue or need help getting started? Drop us a message.</p>
+    <form id="contactForm" action="https://formspree.io/f/xpwdgeey" method="POST">
+      <label>
+        Name
+        <input type="text" name="name" required placeholder="Your name">
+      </label>
+      <label>
+        Email
+        <input type="email" name="email" required placeholder="you@company.com">
+      </label>
+      <label>
+        Message
+        <textarea name="message" required placeholder="How can we help?"></textarea>
+      </label>
+      <button type="submit">Send message</button>
+    </form>
+    <div class="success" id="contactSuccess">Thanks! We'll get back to you shortly.</div>
   </section>
 
   <footer>
     <span class="copy">&copy; 2025 Skue Labs LLC. All rights reserved.</span>
     <div class="footer-links">
       <a href="/privacy">Privacy Policy</a>
-      <a href="mailto:support@skuelabs.com">support@skuelabs.com</a>
+      <a href="#contact">Contact</a>
     </div>
   </footer>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          document.getElementById('contactSuccess').style.display = 'block';
+        }
+      } catch (err) {
+        form.submit();
+      }
+    });
+  </script>
 
 </body>
 </html>
