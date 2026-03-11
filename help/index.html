@@ -257,6 +257,93 @@
       font-style: italic;
     }
 
+    /* ── Search ──────────────────────────────────────────────── */
+    .search-wrapper {
+      max-width: 480px;
+      margin: 24px auto 0;
+      position: relative;
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: var(--muted);
+      pointer-events: none;
+    }
+    #help-search {
+      width: 100%;
+      height: 44px;
+      padding: 0 40px 0 42px;
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--text);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    #help-search:focus {
+      border-color: var(--accent-dark);
+      box-shadow: 0 0 0 3px rgba(181,212,59,0.18);
+    }
+    #help-search::placeholder { color: #aaa; }
+    .search-kbd {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      color: #bbb;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 7px;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .search-clear {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: var(--code-bg);
+      border: none;
+      border-radius: 50%;
+      font-size: 16px;
+      color: var(--muted);
+      cursor: pointer;
+      line-height: 1;
+    }
+    .search-clear:hover { background: var(--border); color: var(--text); }
+    .search-count {
+      display: block;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+      min-height: 20px;
+    }
+    mark.search-hl {
+      background: #fef08a;
+      color: inherit;
+      border-radius: 2px;
+      padding: 0 1px;
+    }
+    .doc-section.search-hidden { display: none; }
+    .sidebar a.search-dim { opacity: 0.3; transition: opacity 0.15s; }
+    .sidebar a.search-match { color: var(--accent-dark); font-weight: 600; opacity: 1; }
+
     /* Inline code */
     code {
       font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
@@ -409,6 +496,13 @@
   <section class="hero">
     <h1>Help Center</h1>
     <p>Everything you need to set up and manage your Skue: Bulk Order Form. Can't find what you need? <a href="/#contact" style="color:var(--accent-dark)">Contact us</a>.</p>
+    <div class="search-wrapper">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="help-search" placeholder="Search help docs…" autocomplete="off">
+      <span class="search-kbd" id="search-kbd">/</span>
+      <button class="search-clear" id="search-clear" aria-label="Clear search">&times;</button>
+      <div class="search-count" id="search-count"></div>
+    </div>
   </section>
 
   <!-- ── Docs Layout ──────────────────────────────────────────── -->
@@ -1129,6 +1223,164 @@
         document.getElementById('sidebar').classList.remove('open');
       });
     });
+
+    // ── Help Center Search ─────────────────────────────────────
+    (function() {
+      var input = document.getElementById('help-search');
+      var clearBtn = document.getElementById('search-clear');
+      var countEl = document.getElementById('search-count');
+      var kbdEl = document.getElementById('search-kbd');
+      var sections = document.querySelectorAll('.doc-section');
+      var sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+      var debounceTimer;
+
+      // Build a map of sidebar link href → element
+      var linkMap = {};
+      sidebarLinks.forEach(function(a) {
+        var id = a.getAttribute('href');
+        if (id && id.charAt(0) === '#') linkMap[id.substring(1)] = a;
+      });
+
+      function clearHighlights() {
+        var marks = document.querySelectorAll('mark.search-hl');
+        marks.forEach(function(m) {
+          var parent = m.parentNode;
+          parent.replaceChild(document.createTextNode(m.textContent), m);
+          parent.normalize();
+        });
+      }
+
+      function highlightText(root, query) {
+        var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode: function(node) {
+            var tag = node.parentNode.tagName;
+            if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'CODE' || tag === 'MARK') {
+              return NodeFilter.FILTER_REJECT;
+            }
+            return NodeFilter.FILTER_ACCEPT;
+          }
+        });
+
+        var textNodes = [];
+        while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+        var lowerQuery = query.toLowerCase();
+        textNodes.forEach(function(node) {
+          var text = node.textContent;
+          var lowerText = text.toLowerCase();
+          var idx = lowerText.indexOf(lowerQuery);
+          if (idx === -1) return;
+
+          var frag = document.createDocumentFragment();
+          var lastIdx = 0;
+          while (idx !== -1) {
+            if (idx > lastIdx) {
+              frag.appendChild(document.createTextNode(text.substring(lastIdx, idx)));
+            }
+            var mark = document.createElement('mark');
+            mark.className = 'search-hl';
+            mark.textContent = text.substring(idx, idx + query.length);
+            frag.appendChild(mark);
+            lastIdx = idx + query.length;
+            idx = lowerText.indexOf(lowerQuery, lastIdx);
+          }
+          if (lastIdx < text.length) {
+            frag.appendChild(document.createTextNode(text.substring(lastIdx)));
+          }
+          node.parentNode.replaceChild(frag, node);
+        });
+      }
+
+      function resetAll() {
+        clearHighlights();
+        sections.forEach(function(s) { s.classList.remove('search-hidden'); });
+        sidebarLinks.forEach(function(a) {
+          a.classList.remove('search-dim', 'search-match');
+        });
+        countEl.textContent = '';
+        clearBtn.style.display = 'none';
+        kbdEl.style.display = '';
+      }
+
+      function doSearch() {
+        var query = input.value.trim();
+        if (!query) { resetAll(); return; }
+
+        kbdEl.style.display = 'none';
+        clearBtn.style.display = 'flex';
+        clearHighlights();
+
+        var lowerQuery = query.toLowerCase();
+        var matchCount = 0;
+        var matchedIds = {};
+
+        sections.forEach(function(section) {
+          var text = section.textContent.toLowerCase();
+          if (text.indexOf(lowerQuery) !== -1) {
+            section.classList.remove('search-hidden');
+            highlightText(section, query);
+            matchCount++;
+            matchedIds[section.id] = true;
+          } else {
+            section.classList.add('search-hidden');
+          }
+        });
+
+        // Update sidebar
+        sidebarLinks.forEach(function(a) {
+          var href = a.getAttribute('href');
+          var id = href && href.charAt(0) === '#' ? href.substring(1) : '';
+          if (matchedIds[id]) {
+            a.classList.add('search-match');
+            a.classList.remove('search-dim');
+          } else {
+            a.classList.add('search-dim');
+            a.classList.remove('search-match');
+          }
+        });
+
+        // Update count
+        if (matchCount === 0) {
+          countEl.textContent = 'No results found';
+        } else if (matchCount === 1) {
+          countEl.textContent = '1 section found';
+        } else {
+          countEl.textContent = matchCount + ' sections found';
+        }
+      }
+
+      // Debounced input handler
+      input.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(doSearch, 150);
+      });
+
+      // Clear button
+      clearBtn.addEventListener('click', function() {
+        input.value = '';
+        resetAll();
+        input.focus();
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', function(e) {
+        // "/" to focus search (when not in an input)
+        if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+          var tag = document.activeElement.tagName;
+          if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
+            e.preventDefault();
+            input.focus();
+            input.select();
+          }
+        }
+        // Escape to clear and blur
+        if (e.key === 'Escape' && document.activeElement === input) {
+          input.value = '';
+          resetAll();
+          input.blur();
+        }
+      });
+    })();
   </script>
 </body>
 </html>
