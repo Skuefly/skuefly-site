@@ -35,6 +35,7 @@
       color: var(--text);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     /* ── Nav ──────────────────────────────────────────────────── */
@@ -454,6 +455,8 @@
       .sidebar-group-title { margin-bottom: 4px; }
       .sidebar a { padding: 6px 0; }
       footer { flex-direction: column; align-items: center; }
+      .doc-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .content { overflow-x: hidden; }
     }
 
     /* Smooth scroll */
