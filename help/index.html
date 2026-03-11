@@ -259,15 +259,16 @@
 
     /* ── Search ──────────────────────────────────────────────── */
     .search-wrapper {
-      max-width: 480px;
-      margin: 24px auto 0;
+      margin-bottom: 40px;
+    }
+    .search-input-wrap {
       position: relative;
+      display: flex;
+      align-items: center;
     }
     .search-icon {
       position: absolute;
       left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
       width: 18px;
       height: 18px;
       color: var(--muted);
@@ -275,8 +276,8 @@
     }
     #help-search {
       width: 100%;
-      height: 44px;
-      padding: 0 40px 0 42px;
+      height: 46px;
+      padding: 0 44px 0 42px;
       font-family: inherit;
       font-size: 15px;
       color: var(--text);
@@ -291,27 +292,9 @@
       box-shadow: 0 0 0 3px rgba(181,212,59,0.18);
     }
     #help-search::placeholder { color: #aaa; }
-    .search-kbd {
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 600;
-      color: #bbb;
-      background: var(--code-bg);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2px 7px;
-      line-height: 1;
-      pointer-events: none;
-    }
     .search-clear {
       position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
+      right: 12px;
       display: none;
       align-items: center;
       justify-content: center;
@@ -327,8 +310,6 @@
     }
     .search-clear:hover { background: var(--border); color: var(--text); }
     .search-count {
-      display: block;
-      text-align: center;
       font-size: 13px;
       color: var(--muted);
       margin-top: 8px;
@@ -341,6 +322,7 @@
       padding: 0 1px;
     }
     .doc-section.search-hidden { display: none; }
+    .search-sub-hidden { display: none !important; }
     .sidebar a.search-dim { opacity: 0.3; transition: opacity 0.15s; }
     .sidebar a.search-match { color: var(--accent-dark); font-weight: 600; opacity: 1; }
 
@@ -496,13 +478,6 @@
   <section class="hero">
     <h1>Help Center</h1>
     <p>Everything you need to set up and manage your Skue: Bulk Order Form. Can't find what you need? <a href="/#contact" style="color:var(--accent-dark)">Contact us</a>.</p>
-    <div class="search-wrapper">
-      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-      <input type="text" id="help-search" placeholder="Search help docs…" autocomplete="off">
-      <span class="search-kbd" id="search-kbd">/</span>
-      <button class="search-clear" id="search-clear" aria-label="Clear search">&times;</button>
-      <div class="search-count" id="search-count"></div>
-    </div>
   </section>
 
   <!-- ── Docs Layout ──────────────────────────────────────────── -->
@@ -559,6 +534,15 @@
 
     <!-- ── Content ────────────────────────────────────────────── -->
     <main class="content">
+
+      <div class="search-wrapper">
+        <div class="search-input-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="help-search" placeholder="Search help docs…" autocomplete="off">
+          <button class="search-clear" id="search-clear" aria-label="Clear search">&times;</button>
+        </div>
+        <div class="search-count" id="search-count"></div>
+      </div>
 
       <!-- ════════════════════════════════════════════════════════
            GETTING STARTED
@@ -1229,24 +1213,21 @@
       var input = document.getElementById('help-search');
       var clearBtn = document.getElementById('search-clear');
       var countEl = document.getElementById('search-count');
-      var kbdEl = document.getElementById('search-kbd');
       var sections = document.querySelectorAll('.doc-section');
       var sidebarLinks = document.querySelectorAll('.sidebar-nav a');
       var debounceTimer;
 
-      // Build a map of sidebar link href → element
-      var linkMap = {};
-      sidebarLinks.forEach(function(a) {
-        var id = a.getAttribute('href');
-        if (id && id.charAt(0) === '#') linkMap[id.substring(1)] = a;
-      });
-
       function clearHighlights() {
-        var marks = document.querySelectorAll('mark.search-hl');
-        marks.forEach(function(m) {
+        document.querySelectorAll('mark.search-hl').forEach(function(m) {
           var parent = m.parentNode;
           parent.replaceChild(document.createTextNode(m.textContent), m);
           parent.normalize();
+        });
+      }
+
+      function clearSubHidden() {
+        document.querySelectorAll('.search-sub-hidden').forEach(function(el) {
+          el.classList.remove('search-sub-hidden');
         });
       }
 
@@ -1255,6 +1236,10 @@
           acceptNode: function(node) {
             var tag = node.parentNode.tagName;
             if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'CODE' || tag === 'MARK') {
+              return NodeFilter.FILTER_REJECT;
+            }
+            // Skip nodes inside hidden sub-sections
+            if (node.parentNode.closest && node.parentNode.closest('.search-sub-hidden')) {
               return NodeFilter.FILTER_REJECT;
             }
             return NodeFilter.FILTER_ACCEPT;
@@ -1291,24 +1276,55 @@
         });
       }
 
+      // Hide non-matching sub-blocks (h3/h4 groups) within a matching section
+      function hideNonMatchingSubs(section, lowerQuery) {
+        var h2 = section.querySelector('h2');
+        // If the section's own h2 title matches, show everything
+        if (h2 && h2.textContent.toLowerCase().indexOf(lowerQuery) !== -1) return;
+
+        var children = Array.from(section.children);
+        // Group children into blocks. A block starts at h3/h4.
+        // The first block is everything before the first h3/h4 (intro content + h2).
+        var blocks = [];
+        var current = [];
+        children.forEach(function(child) {
+          var tag = child.tagName;
+          if ((tag === 'H3' || tag === 'H4') && current.length > 0) {
+            blocks.push(current);
+            current = [];
+          }
+          current.push(child);
+        });
+        if (current.length > 0) blocks.push(current);
+
+        blocks.forEach(function(block) {
+          // Never hide the first block (contains h2 + intro paragraph)
+          if (block[0].tagName === 'H2') return;
+          var blockText = block.map(function(el) { return el.textContent; }).join(' ').toLowerCase();
+          if (blockText.indexOf(lowerQuery) === -1) {
+            block.forEach(function(el) { el.classList.add('search-sub-hidden'); });
+          }
+        });
+      }
+
       function resetAll() {
         clearHighlights();
+        clearSubHidden();
         sections.forEach(function(s) { s.classList.remove('search-hidden'); });
         sidebarLinks.forEach(function(a) {
           a.classList.remove('search-dim', 'search-match');
         });
         countEl.textContent = '';
         clearBtn.style.display = 'none';
-        kbdEl.style.display = '';
       }
 
       function doSearch() {
         var query = input.value.trim();
         if (!query) { resetAll(); return; }
 
-        kbdEl.style.display = 'none';
         clearBtn.style.display = 'flex';
         clearHighlights();
+        clearSubHidden();
 
         var lowerQuery = query.toLowerCase();
         var matchCount = 0;
@@ -1318,6 +1334,7 @@
           var text = section.textContent.toLowerCase();
           if (text.indexOf(lowerQuery) !== -1) {
             section.classList.remove('search-hidden');
+            hideNonMatchingSubs(section, lowerQuery);
             highlightText(section, query);
             matchCount++;
             matchedIds[section.id] = true;
