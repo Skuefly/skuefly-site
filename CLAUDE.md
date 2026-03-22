@@ -1,12 +1,12 @@
-# Skue Labs Website
+# Skuefly Website
 
 ## Overview
-Static website for Skue Labs. Hosted on GitHub Pages.
+Static website for Skuefly. Hosted on GitHub Pages.
 
 ## Hosting
-- **Domain:** skuelabs.com
+- **Domain:** skuefly.com
 - **Hosting:** GitHub Pages (from `main` branch)
-- **Repo:** skuelabs/skuelabs-site
+- **Repo:** skuefly/skuefly-site
 
 ## Structure
 - `index.html` — Main landing page
