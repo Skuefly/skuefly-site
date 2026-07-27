@@ -26,6 +26,14 @@ If you cannot push directly to `main`:
 The `claude/` branch prefix is required for auto-merge to trigger.
 
 <!-- BEGIN workspace-response-style (synced from skuefly-shared/response-style.md — do not edit here; run sync-style.sh) -->
+## Who Josh is + the companies (context every session needs)
+
+- **Josh**: sole operator, NOT a developer (15 yrs editorial design, DMG Atlanta). He directs; Claude executes.
+- **Camino Journey LLC ("Cajo")** — high-end fishing kayaks, inflatables, pedal drives, paddlesports. Mostly B2B. Store: `caminojourney-co.myshopify.com`.
+- **Zola Mod Inc ("Zola")** — high-end modular boardgaming furniture. Mostly DTC. Store: `zola-mod.myshopify.com`.
+- **Tripletail LLC** — parent asset-holder: owns the IP, trademarks, and customer bases for both brands. Josh owns all three US entities directly (siblings, not subsidiaries).
+- **Skuefly** — Josh's solo Shopify-app company (B2B merchant apps, e.g. the Bulk Order Form). Also the GitHub org (`Skuefly`) holding every repo.
+
 ## Response style (workspace standard — applies to EVERY session, including cloud)
 
 Bite-size or it's wrong. This is Josh's #1 recurring correction.
