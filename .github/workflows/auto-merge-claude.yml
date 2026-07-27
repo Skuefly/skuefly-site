@@ -6,7 +6,66 @@ on:
       - 'claude/**'
 
 jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    outputs:
+      verdict: ${{ steps.gate.outputs.verdict }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Claude review gate
+        id: gate
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          set -uo pipefail
+          git fetch origin main --quiet
+          DIFF=$(git diff origin/main...HEAD | head -c 120000)
+          COMMITS=$(git log origin/main..HEAD --format='%s' | head -20)
+          if [ -z "$DIFF" ]; then
+            echo "Empty diff - passing." | tee /tmp/review.txt
+            echo "verdict=PASS" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+            echo "Review gate could not run: ANTHROPIC_API_KEY secret is not set. Held for manual review (fail-safe)." | tee /tmp/review.txt
+            echo "verdict=FAIL" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          BODY=$(jq -n --arg d "$DIFF" --arg c "$COMMITS" '{
+            model: "claude-sonnet-5", max_tokens: 1500,
+            messages: [{role: "user", content: ("You are the merge gate for a solo non-developer operator. This diff will auto-merge to main and deploy if you PASS it. FAIL it if you find: likely bugs or breakage, destructive operations, secrets or tokens committed, changes far beyond what the commit messages describe, or anything touching payments/orders. Otherwise PASS. Your FIRST line must be exactly PASS or FAIL, then a plain-English summary in 3 bullets max.
+
+Commit messages:
+" + $c + "
+
+Diff:
+" + $d)}]}')
+          RESP=$(curl -s -m 120 https://api.anthropic.com/v1/messages             -H "x-api-key: $ANTHROPIC_API_KEY"             -H "anthropic-version: 2023-06-01"             -H "content-type: application/json"             -d "$BODY")
+          TEXT=$(echo "$RESP" | jq -r '.content[0].text // empty')
+          if [ -z "$TEXT" ]; then
+            { echo "Review gate errored (no API response) - held for manual review (fail-safe)."; echo "$RESP" | head -c 500; } | tee /tmp/review.txt
+            echo "verdict=FAIL" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          echo "$TEXT" | tee /tmp/review.txt
+          V=$(echo "$TEXT" | head -1 | tr -d '[:space:]')
+          if [ "$V" = "PASS" ]; then echo "verdict=PASS" >> "$GITHUB_OUTPUT"; else echo "verdict=FAIL" >> "$GITHUB_OUTPUT"; fi
+      - name: Hold as PR instead of merging (gate failed)
+        if: steps.gate.outputs.verdict != 'PASS'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          gh pr create --base main --head "$BRANCH" \
+            --title "Gate-held: $BRANCH" \
+            --body-file /tmp/review.txt \
+            || echo "PR may already exist - fine."
+
   auto-merge:
+    needs: review
+    if: needs.review.outputs.verdict == 'PASS'
     runs-on: ubuntu-latest
     permissions:
       contents: write
