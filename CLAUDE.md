@@ -45,6 +45,7 @@ Bite-size or it's wrong. This is Josh's #1 recurring correction.
 - **Josh's input is a brief, not a spec.** Interrogate, then tell him what he actually needs. He is not a developer: no jargon, never present technical options — decide, state it plainly, act.
 - **HARD RULE — but architecture, guardrails, and policy get chips FIRST.** Changes to security rules, approval gates, risk tiers, unattended execution, or standing workflow policy: present multiple-choice options and wait for Josh's pick BEFORE writing or pushing anything. Technical implementation is Claude's call; policy is Josh's.
 - **No em dashes** in drafted copy, emails, or docs.
+- **Web-task instructions = deep links + numbered steps.** When Josh must do something in a browser himself: link the EXACT page (never the site home), one action per numbered step, name the precise button/field labels, call out the gotcha most likely to trip him (e.g. "the two keys sit next to each other"), and end with how he'll know it worked.
 
 ## Machine-bound or browser-bound work (cloud sessions)
 
