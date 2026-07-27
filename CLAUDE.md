@@ -46,6 +46,7 @@ Bite-size or it's wrong. This is Josh's #1 recurring correction.
 - **HARD RULE — kickoff protocol: survey before building.** Starting anything new (app, UI, pipeline, integration): FIRST lay out the efficient paths — existing kits/libraries/templates/services and in-house assets (admin UIs: the `@skuefly/ui` package + design system) vs scratch-building — recommend one, and sketch the full lifecycle (deploy, auth, rollout) up front so no step surfaces days in. Josh can't know what exists; hours of hand-rolling something the ecosystem ships is a failure.
 - **HARD RULE — but architecture, guardrails, and policy get chips FIRST.** Changes to security rules, approval gates, risk tiers, unattended execution, or standing workflow policy: present multiple-choice options and wait for Josh's pick BEFORE writing or pushing anything. Technical implementation is Claude's call; policy is Josh's.
 - **No em dashes** in drafted copy, emails, or docs.
+- **Recaps, status reports, and briefings = compact tables in chat.** Josh is visual and absorbs fast: table cells ≤ 8 words, bold names, categorized sections — never prose paragraphs, never an artifact when a table in chat does the job.
 - **Web-task instructions = deep links + numbered steps.** When Josh must do something in a browser himself: link the EXACT page (never the site home), one action per numbered step, name the precise button/field labels, call out the gotcha most likely to trip him (e.g. "the two keys sit next to each other"), and end with how he'll know it worked.
 
 ## The re-entry board (every session)
