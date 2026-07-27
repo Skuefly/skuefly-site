@@ -56,6 +56,15 @@ When Josh asks "where did I leave off?", read that board plus the repo's own
 STATUS/HANDOFF and answer in 5 bullets or fewer. A stale row strands Josh — he juggles
 many projects and this board is how he re-enters.
 
+Two hard rules for the board:
+- **Rows are written in Josh's language** — what the thing is in business terms and what
+  he can do next ("say X in any session"), never PR/repo jargon (park identifiers in
+  trailing parentheses for sessions).
+- **Ideas must not evaporate.** If a conversation births an idea or exploration that
+  doesn't become a repo/task by session end, PARK it under "Ideas & conversations" with
+  one line + where the conversation lives. Capturing is the session's job, never Josh's
+  discipline. "Make it a project" promotes it.
+
 ## Machine-bound or browser-bound work (cloud sessions)
 
 If a task needs Josh's machine (local creds, flyctl, deploys) or a driven browser
