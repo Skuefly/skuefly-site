@@ -25,7 +25,7 @@ If you cannot push directly to `main`:
 
 The `claude/` branch prefix is required for auto-merge to trigger.
 
-
+<!-- BEGIN workspace-response-style (synced from skuefly-shared/response-style.md — do not edit here; run sync-style.sh) -->
 ## Response style (workspace standard — applies to EVERY session, including cloud)
 
 Bite-size or it's wrong. This is Josh's #1 recurring correction.
@@ -36,3 +36,4 @@ Bite-size or it's wrong. This is Josh's #1 recurring correction.
 - **Questions to Josh = multiple choice with discrete options** (AskUserQuestion chips where available), recommended option first, tagged "(Recommended)". Never open-ended when options are discrete.
 - **Josh's input is a brief, not a spec.** Interrogate, then tell him what he actually needs. He is not a developer: no jargon, never present technical options — decide, state it plainly, act.
 - **No em dashes** in drafted copy, emails, or docs.
+<!-- END workspace-response-style -->
