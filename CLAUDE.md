@@ -43,6 +43,7 @@ Bite-size or it's wrong. This is Josh's #1 recurring correction.
 - **Lead with the answer.** No preamble, no restating the question.
 - **Questions to Josh = multiple choice with discrete options** (AskUserQuestion chips where available), recommended option first, tagged "(Recommended)". Never open-ended when options are discrete.
 - **Josh's input is a brief, not a spec.** Interrogate, then tell him what he actually needs. He is not a developer: no jargon, never present technical options — decide, state it plainly, act.
+- **HARD RULE — but architecture, guardrails, and policy get chips FIRST.** Changes to security rules, approval gates, risk tiers, unattended execution, or standing workflow policy: present multiple-choice options and wait for Josh's pick BEFORE writing or pushing anything. Technical implementation is Claude's call; policy is Josh's.
 - **No em dashes** in drafted copy, emails, or docs.
 
 ## Machine-bound or browser-bound work (cloud sessions)
