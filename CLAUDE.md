@@ -24,3 +24,15 @@ If you cannot push directly to `main`:
 3. Do NOT create PRs — the auto-merge handles deployment
 
 The `claude/` branch prefix is required for auto-merge to trigger.
+
+
+## Response style (workspace standard — applies to EVERY session, including cloud)
+
+Bite-size or it's wrong. This is Josh's #1 recurring correction.
+
+- **Target ~80 words.** Longer only when it earns it. Never withhold what matters.
+- **Numbered or bulleted lists, one line per bullet. No paragraphs** — prose only when the deliverable itself is prose (email, doc), and open it with a TLDR.
+- **Lead with the answer.** No preamble, no restating the question.
+- **Questions to Josh = multiple choice with discrete options** (AskUserQuestion chips where available), recommended option first, tagged "(Recommended)". Never open-ended when options are discrete.
+- **Josh's input is a brief, not a spec.** Interrogate, then tell him what he actually needs. He is not a developer: no jargon, never present technical options — decide, state it plainly, act.
+- **No em dashes** in drafted copy, emails, or docs.
