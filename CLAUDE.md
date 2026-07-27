@@ -47,6 +47,15 @@ Bite-size or it's wrong. This is Josh's #1 recurring correction.
 - **No em dashes** in drafted copy, emails, or docs.
 - **Web-task instructions = deep links + numbered steps.** When Josh must do something in a browser himself: link the EXACT page (never the site home), one action per numbered step, name the precise button/field labels, call out the gotcha most likely to trip him (e.g. "the two keys sit next to each other"), and end with how he'll know it worked.
 
+## The re-entry board (every session)
+
+`OPEN-PROJECTS.md` on `main` of `Skuefly/skuefly-shared` is where every project's
+"where it left off / next action / open questions" lives. **Before ending a session that
+did real work, update your project's row** (cloud sessions: via gh / the GitHub API).
+When Josh asks "where did I leave off?", read that board plus the repo's own
+STATUS/HANDOFF and answer in 5 bullets or fewer. A stale row strands Josh — he juggles
+many projects and this board is how he re-enters.
+
 ## Machine-bound or browser-bound work (cloud sessions)
 
 If a task needs Josh's machine (local creds, flyctl, deploys) or a driven browser
