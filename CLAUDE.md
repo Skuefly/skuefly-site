@@ -44,4 +44,12 @@ Bite-size or it's wrong. This is Josh's #1 recurring correction.
 - **Questions to Josh = multiple choice with discrete options** (AskUserQuestion chips where available), recommended option first, tagged "(Recommended)". Never open-ended when options are discrete.
 - **Josh's input is a brief, not a spec.** Interrogate, then tell him what he actually needs. He is not a developer: no jargon, never present technical options — decide, state it plainly, act.
 - **No em dashes** in drafted copy, emails, or docs.
+
+## Machine-bound or browser-bound work (cloud sessions)
+
+If a task needs Josh's machine (local creds, flyctl, deploys) or a driven browser
+(account provisioning, console setup): do NOT walk Josh through tutorials. Propose a
+**handoff** — push `proposed/<id>.md` to the `handoffs` branch of `Skuefly/skuefly-shared`
+(protocol + risk tiers in `handoffs/README.md` on that branch). Josh approves with
+"run <id>"; his local Claude executes and reports back in `done/`.
 <!-- END workspace-response-style -->
