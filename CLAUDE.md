@@ -62,8 +62,11 @@ Bite-size or it's wrong. This is Josh's #1 recurring correction.
 ## The re-entry board (every session)
 
 `OPEN-PROJECTS.md` on `main` of `Skuefly/skuefly-shared` is where every project's
-"where it left off / next action / open questions" lives. **Before ending a session that
-did real work, update your project's row** (cloud sessions: via gh / the GitHub API).
+"where it left off / next action / open questions" lives. **Bank state AS YOU GO, not at
+session end** — Josh drifts between sessions and travels; assume any conversation may go
+dormant mid-stream without warning. File decisions, ideas, and progress to the board the
+moment they land (cloud sessions: via gh / the GitHub API); a session that dies unfiled
+has lost Josh's work.
 When Josh asks "where did I leave off?", read that board plus the repo's own
 STATUS/HANDOFF and answer in 5 bullets or fewer. A stale row strands Josh — he juggles
 many projects and this board is how he re-enters.
