@@ -76,6 +76,16 @@ Two hard rules for the board:
   one line + where the conversation lives. Capturing is the session's job, never Josh's
   discipline. "Make it a project" promotes it.
 
+## HARD RULE — personal is sealed (Josh, 2026-07-28)
+
+Personal repos (the `personal/` group: lawsuit, health, estate, travel, and any content
+derived from them) must NEVER reach any surface another person could see: employee-facing
+apps, the Product Hub, MCP connectors/data server, shared artifacts, exported reports,
+public repos. Before ANY new person (employee, partner, contractor) is granted access to
+any repo, board, report, app, or connector: audit that surface for personal content and
+relocate it FIRST — this is a blocking check, not a cleanup item. The weekly Chief
+verifies no personal content has leaked into a shareable surface.
+
 ## Machine-bound or browser-bound work (cloud sessions)
 
 If a task needs Josh's machine (local creds, flyctl, deploys) or a driven browser
