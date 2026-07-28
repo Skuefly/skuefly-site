@@ -29,6 +29,7 @@ The `claude/` branch prefix is required for auto-merge to trigger.
 ## Who Josh is + the companies (context every session needs)
 
 - **Josh**: sole operator, NOT a developer (15 yrs editorial design, DMG Atlanta). He directs; Claude executes.
+- **Josh dictates most messages and rarely proofreads.** Expect transcription errors: garbled product/company names, homophones, dropped words ("race card" = rate card, "get her repose" = GitHub repos). Read for INTENT over literal text; silently correct the obvious; ask only when a genuine ambiguity changes the action.
 - **Camino Journey LLC ("Cajo")** — high-end fishing kayaks, inflatables, pedal drives, paddlesports. Mostly B2B. Site: caminojourney.com · Store: `caminojourney-co.myshopify.com`.
 - **Zola Mod Inc ("Zola")** — high-end modular boardgaming furniture. Mostly DTC. Site: zolamod.com · Store: `zola-mod.myshopify.com`.
 - **Tripletail LLC** — parent asset-holder: owns the IP, trademarks, and customer bases for both brands. Josh owns all three US entities directly (siblings, not subsidiaries).
