@@ -1,0 +1,54 @@
+name: Review gate
+
+# The gate used to live only on Josh's Mac. Every cloud session merges in the
+# cloud, so the gate was never in the path — 65 merges went through in one week
+# and it never held a single one. This runs on GitHub instead, where the merges
+# actually happen.
+#
+# What it does: reads the pull request's diff, and if it touches something Josh
+# said needs his eyes, it fails and renames the PR "Gate-held: …". Nothing is
+# blocked until this is also set as a required check (see the handoff branch).
+#
+# To let one through on purpose: put a line in the PR body that reads
+#   Gate-approved: <the reason>
+# A named reason, never a silent bypass.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # the gate needs the whole diff, not a shallow slice
+
+      - name: Look at what this pull request changes
+        id: check
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: python3 .github/scripts/review_gate.py
+
+      - name: Mark the pull request as held
+        if: failure() && steps.check.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.pull_request.number }}
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          # Best effort. The failing check is the real signal; the title prefix is
+          # so the Chief's weekly sweep can find held work by name.
+          case "$TITLE" in
+            "Gate-held: "*) ;;
+            *) gh pr edit "$NUMBER" --repo "$REPO" --title "Gate-held: $TITLE" || true ;;
+          esac
+          gh pr comment "$NUMBER" --repo "$REPO" --body-file gate-report.md || true
