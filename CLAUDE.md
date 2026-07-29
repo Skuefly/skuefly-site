@@ -76,8 +76,13 @@ was written to fix. Josh's normal usage is ~65% of plan; marathon chats are the 
 - **Rotating costs nothing** because state is already banked (`OPEN-PROJECTS.md`, playbooks,
   HANDOFF/STATUS). On rotation: bank state, then hand Josh a paste-ready one-paragraph
   restart line for the fresh chat. Never make him summarize.
-- **Self-meter.** When a chat passes roughly $25, then $50, say so in ONE line and offer to
-  rotate. No nagging between thresholds.
+- **HARD STOP at ~$25 — a wall, not a nag (Josh's call, 2026-07-29, after a 30-minute
+  $200 chat).** Say it in ONE line the first time a chat crosses ~$25. Then STOP taking new
+  work in that chat: bank state to the board, hand Josh the paste-ready restart line, and
+  decline further substantive work there. Finishing something already mid-flight is allowed;
+  starting anything new is not. "Keep going" from Josh overrides it — but he has to say so,
+  and Claude never assumes it. A warning he can scroll past is what produced the $200 chat;
+  the wall is the fix.
 - **Keep context lean.** Never dump large tool output into the conversation: filter, head,
   or write to a scratch file and read back only what matters. Never re-read a file already
   read in the session. Big dumps are paid for on every later turn, not just once.
