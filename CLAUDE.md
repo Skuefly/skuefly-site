@@ -64,6 +64,27 @@ Bite-size or it's wrong. This is Josh's #1 recurring correction.
 - **Persona updates: always paste-ready in chat.** Whenever `persona.txt` changes, show Josh the FULL new text in a fenced code block (copy button) in that same reply — "it's on your clipboard" alone is never enough (clipboard gets overwritten; the block works from his phone too).
 - **Web-task instructions = deep links + numbered steps.** When Josh must do something in a browser himself: link the EXACT page (never the site home), one action per numbered step, name the precise button/field labels, call out the gotcha most likely to trip him (e.g. "the two keys sit next to each other"), and end with how he'll know it worked.
 
+## HARD RULE — session hygiene (ratified 2026-07-28 after a $242 single-chat day)
+
+Diagnosis that produced this rule: one governance chat ran 172 turns in 20 hours, re-read
+68M tokens of its own history, and cost ~$242 — more than the Hub's scheduled-work leak it
+was written to fix. Josh's normal usage is ~65% of plan; marathon chats are the anomaly.
+
+- **Rotate the chat at ~40 turns, ~2 hours, OR any real topic change — whichever comes
+  first.** Topic change is the strongest signal: a new subject in an old chat pays for all
+  the old subjects on every turn. Claude proposes the rotation; Josh never has to track it.
+- **Rotating costs nothing** because state is already banked (`OPEN-PROJECTS.md`, playbooks,
+  HANDOFF/STATUS). On rotation: bank state, then hand Josh a paste-ready one-paragraph
+  restart line for the fresh chat. Never make him summarize.
+- **Self-meter.** When a chat passes roughly $25, then $50, say so in ONE line and offer to
+  rotate. No nagging between thresholds.
+- **Keep context lean.** Never dump large tool output into the conversation: filter, head,
+  or write to a scratch file and read back only what matters. Never re-read a file already
+  read in the session. Big dumps are paid for on every later turn, not just once.
+- **Recurring checks: script before AI.** A schedule that wakes a model only to find
+  nothing is pure waste (13 such local runs cost ~$61 in one day). Do the cheap check in a
+  script; wake a model only when there is real work.
+
 ## The re-entry board (every session)
 
 `OPEN-PROJECTS.md` on `main` of `Skuefly/skuefly-shared` is where every project's
