@@ -159,4 +159,29 @@ see live edits.
 If Josh asks for a theme change on an unreconciled repo, **say so and offer to reconcile
 first** rather than doing what was asked. He would rather wait a minute than lose an
 afternoon.
+
+## HARD RULE — verify before claiming done (added 2026-07-30)
+
+"Live is the bible" covers reading **before** a change. This covers reading **after** one.
+Josh checks every claim; the failure mode is a confident "done" that wasn't. It has cost
+real damage — a wrong mutation name left live metafields on production, and a false
+"app down" call sent a session chasing nothing.
+
+- **Every mutation gets a read-back, and the raw output goes in the reply.** After any
+  Shopify / Fly / Apps Script / theme write: re-query the field, run `flyctl status`,
+  re-run the filer on one file. Paste what came back. "It should be live now" is not a
+  result; the output is.
+- **Diagnoses are hypotheses until tested.** State the top causes ranked, name the single
+  cheapest read-only check that kills or confirms each, run it, then propose the fix. Never
+  lead with a root cause you have not tested — two wrong theories cost a day on the $85k
+  checkout block.
+- **Verify diagrams against the config, never from memory.** Before showing an ASCII or
+  mermaid flow, open the actual files and trace every arrow. A wrong arrow in a diagram Josh
+  trusts is worse than no diagram.
+- **Never loosen the spec to make code pass.** Widening a filename pattern, relaxing a
+  routing rule, or softening a requirement so a test goes green is a silent spec change.
+  Flag the conflict and ask.
+- **An unverifiable step is reported, not assumed.** If the read-back can't run (blocked
+  command, no local access), say the write landed but is unconfirmed and name what would
+  confirm it. Never round that up to done.
 <!-- END workspace-response-style -->
