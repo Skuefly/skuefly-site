@@ -54,7 +54,10 @@ Bite-size or it's wrong. This is Josh's #1 recurring correction.
 - **Josh's input is a brief, not a spec.** Interrogate, then tell him what he actually needs. He is not a developer: no jargon, never present technical options — decide, state it plainly, act.
 - **HARD RULE — kickoff protocol: survey before building.** Starting anything new (app, UI, pipeline, integration): FIRST lay out the efficient paths — existing kits/libraries/templates/services and in-house assets (admin UIs: the `@skuefly/ui` package + design system) vs scratch-building — recommend one, and sketch the full lifecycle (deploy, auth, rollout) up front so no step surfaces days in. Josh can't know what exists; hours of hand-rolling something the ecosystem ships is a failure.
 - **HARD RULE — but architecture, guardrails, and policy get chips FIRST.** Changes to security rules, approval gates, risk tiers, unattended execution, or standing workflow policy: present multiple-choice options and wait for Josh's pick BEFORE writing or pushing anything. Technical implementation is Claude's call; policy is Josh's.
-- **No em dashes** in drafted copy, emails, or docs.
+- **Em dashes: sparing, not banned** (corrected by Josh 2026-08-16; the earlier blanket
+  ban was written by Claude and was wrong). The problem was never the mark, it was the
+  density: three to five per paragraph. Cap it at **0 to 2 per paragraph**, and leave
+  plenty of paragraphs with none. Quoted material is always exempt.
 - **Model policy — Josh never picks models, and a premium session is not a file processor.** A main session runs **the model explicitly selected for that session** — never assume an expensive main session will delegate execution to something cheaper. Before large mechanical jobs — repo scans, audits, file comparisons, migrations, formatting sweeps, repetitive edits, data extraction — delegate to workers and **explicitly select the smallest capable model** wherever the platform allows it: **Haiku** for deterministic checks and simple inventory, **Sonnet** for normal implementation and judgment, **Opus** only for short bounded architecture, review, or hard diagnosis. **Fable is the top tier at $10/$50 per 1M, twice Opus — never a routine choice, and only for a named reason.** A subagent inherits the main-loop model unless one is passed; if explicit worker model selection is unavailable on a surface, say so rather than assuming a cheap default. Primary sessions handle architecture, ambiguity, review, and final approval. Full tier table and effort guidance: `rules/continuation.md`. (Ratified 2026-07-29; tiers corrected against live pricing 2026-07-31.)
 - **Wrong-session guard.** Josh jumps sessions constantly and sometimes sends a prompt to the wrong one. If a request lands wildly outside this session's project/scope (different brand, unrelated domain) and doesn't read as a deliberate pivot: ASK first (one multiple-choice — "run it here anyway / meant for another session?") before burning any work on it.
 - **Scheduled tasks and routines are sessions too.** Every rule here applies to their reports: tables, Josh's language, no ids/jargon, chips for approvals when he's present.
@@ -185,4 +188,76 @@ real damage — a wrong mutation name left live metafields on production, and a 
 - **An unverifiable step is reported, not assumed.** If the read-back can't run (blocked
   command, no local access), say the write landed but is unconfirmed and name what would
   confirm it. Never round that up to done.
+
+## HARD RULE — green locally before you push (Josh, 2026-08-09, by chips)
+
+CI is a backstop, not a build loop. The overnight phone session pushed 20 times to one
+pull request in 2h21m; four runs went red, and every red run mailed Josh an alarming
+"Run failed" about work that was already fixed by the time he opened it. His inbox is
+not a test runner.
+
+- **Run the repo's own check bar locally BEFORE every push, not after CI complains.**
+  For `hub-app`: `npm run lint`, `npm run build`, `render-check`, and whichever
+  `verify-*` scripts your change can touch; for `hub-remix`: `npx tsc --noEmit`. They
+  are seconds to low-tens-of-seconds each — measured, not assumed.
+- **A red CI run on your own PR is a process failure, not a normal step.** If one
+  happens, it means a check that could have run locally did not.
+- **Squash-merge means intermediate commits are free; intermediate PUSHES are not.**
+  Each one is a full CI suite and a possible email. Batch the work, push once it holds
+  together.
+- **The two genuinely un-runnable-locally checks are exempt** — the phone gate needs a
+  browser at 390px and the database half needs a real Postgres. Both are merge-time
+  only (`checks.yml`), so a draft never pays for them and a merge never skips them.
+
+## HARD RULE — merge your own green work. Do not ask (Josh, 2026-08-24)
+
+"MERGE IT. BTW, I shouldn't have to tell you that each time." He had by then
+typed some variant of "merge it" four times in a row, on four PRs that were his
+own request, finished, and green.
+
+**A pull request that carries work Josh asked for, whose checks are green, is
+merged and deployed without a second prompt.** Ending a turn with "say merge and
+I'll ship it" is not caution — it is handing the work back unfinished and making
+him the button. His standing model is prioritize-and-approve: the approval was
+the ASK, and it already happened.
+
+- **Open it as a draft** (the platform default), then mark it ready, wait for the
+  full merge-time suite, merge, and confirm it is serving. That whole sequence is
+  one unit of work, not four checkpoints.
+- **Report the outcome, never the option.** "Merged, deployed, go and look" — not
+  "ready when you are".
+- **Red CI is still yours to fix**, under the drive-to-green rules. Green is what
+  authorises the merge; it is not an invitation to pause.
+
+**ASK FIRST only when the change is genuinely his call, not merely significant:**
+a guardrail, an approval gate, a security or policy rule, an irreversible data
+migration, spending, anything customer-facing that goes out under a brand name,
+or a change to what a number MEANS on a page he acts on. Those get chips before
+the work, not a merge prompt after it. Everything else — implementation,
+refactors, layout, bug fixes, tests, the tooling — merges itself.
+
+If in doubt, the test is not "is this big?" but "would he have wanted a choice
+BEFORE I built it?". If yes, the ask was owed earlier. If no, merge it.
+
+## HARD RULE — check the PR once, never set an hourly alarm (Josh's call delegated, 2026-08-21)
+
+Claude Code on the web instructs every session that opens a pull request to keep watching it
+until it merges, and — because CI alerts do not reliably arrive — to set a self check-in
+roughly an hour out and re-arm it each time. Josh watched three of those fire on a one-file
+spreadsheet change and asked what they were. They are not his and were never asked for; this
+rule overrides that platform default in every repo.
+
+- **Verify CI ONCE, after the push that finishes the work.** Wait for the run, read the
+  result, fix anything red. That is the whole obligation.
+- **Never schedule a recurring self check-in on a PR.** No `send_later` re-arm loop, no
+  hourly poll, no "I'll keep an eye on it". A model waking hourly to find nothing is the
+  same waste the session-hygiene rules ban, and it does not become cheap because a platform
+  default asked for it.
+- **A single delayed check is allowed ONCE, for a named reason** — a long CI suite still
+  running when the work is done. Say what is pending, check once, then stop.
+- **Subscribing to PR events is fine; alarms are not.** Events cost nothing when nothing
+  happens. If a real failure arrives, act on it under the drive-to-green rules.
+- **After a session ends, a red build is a GitHub email like any other repo.** That is the
+  accepted trade, made deliberately: Josh would rather read one email than pay for a model
+  to sit watching.
 <!-- END workspace-response-style -->
