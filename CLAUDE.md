@@ -116,6 +116,20 @@ Two hard rules for the board:
   one line + where the conversation lives. Capturing is the session's job, never Josh's
   discipline. "Make it a project" promotes it.
 
+## Josh's short list by number (2026-09-20)
+
+Every open board project has a number — his starred short list gets 1..N, everything else
+follows after it, straight through. He said it plainly: "Assign numbers or job tickets to
+every project ... especially the Short List ones ... work on 1-10."
+
+- **A number is a POSITION on today's board, never a permanent ticket** (his call, by
+  chips) — it shifts the instant he stars or unstars something.
+- When Josh references a number ("work on 1-10", "what's 4", "park 7"): run
+  `node hub-world/tools/shortlist.mjs` FIRST — never guess from memory or an old list.
+- **Then name the projects back to him before doing anything.** A number is never acted on
+  silently — that's the deal that lets the numbers move. `--json` gives the same list for a
+  session that wants to act on it directly.
+
 ## HARD RULE — personal is sealed (Josh, 2026-07-28)
 
 Personal repos (the `personal/` group: lawsuit, health, estate, travel, and any content
@@ -125,6 +139,24 @@ public repos. Before ANY new person (employee, partner, contractor) is granted a
 any repo, board, report, app, or connector: audit that surface for personal content and
 relocate it FIRST — this is a blocking check, not a cleanup item. The weekly Chief
 verifies no personal content has leaked into a shareable surface.
+
+**Hub World is the one place personal work is allowed (Josh, 2026-09-17, by chips)** — and only
+on these terms, which is why it is not an exception to the rule above but an application of it:
+- **Its rows live in `Skuefly/personal`, a private repo nobody else is ever granted.** They never
+  appear in `OPEN-PROJECTS.md`, and nothing personal is ever committed to `skuefly-shared`.
+- **A session that cannot read that repo renders no personal island.** Cloud sessions, any future
+  employee's checkout, and anyone but Josh get an empty board and an unchanged world — the seal is
+  the missing data, never a filter someone has to remember to apply.
+- **One switch in Josh's menu hides the island**, its jobs and its counts before he shares a screen.
+- **This does not widen anything else.** No other app, connector, report, artifact or board may carry
+  personal content, and the pre-access audit above still runs before any person is granted any surface.
+
+**"Seal X like personal" is a standing instruction Josh can give about BUSINESS work too** (first used
+2026-09-17, on the Sable and Moss brand concept). It means: content moves to `Skuefly/personal`, the shared
+repo and `OPEN-PROJECTS.md` keep nothing but the name, its row goes on the private board, and Hub World
+marks its hex `sealed: true` so it exists only where that repo can be cloned and never touches a business
+count (mechanics: `hub-world/DESIGN.md` → "A sealed hex"). **Git history is not sealed retroactively** — say
+so when sealing something that was public first; scrubbing it is Josh's call and part of the pre-access audit.
 
 ## Machine-bound or browser-bound work (cloud sessions)
 
@@ -260,4 +292,61 @@ rule overrides that platform default in every repo.
 - **After a session ends, a red build is a GitHub email like any other repo.** That is the
   accepted trade, made deliberately: Josh would rather read one email than pay for a model
   to sit watching.
+
+## HARD RULE — what the review gate lets Claude approve (Josh, 2026-09-16, by chips)
+
+The gate holds any change to `.github/workflows/`. On 2026-09-16 it made Josh
+hand-edit a pull request description for the first time ever, and he flagged that:
+"this is the first time you've EVER asked me to do something like that. That
+concerns me." He kept the gate and narrowed it — **Claude approves the routine
+ones; anything touching deploys, secrets, or keys still stops for him.**
+
+- **The exempt shape is ONE thing: adding a step that runs an existing test.**
+  Nothing removed, nothing rewritten, no `uses:`, no `${{ }}`, no schedule, no
+  permissions, no shell block, no new workflow file. `gate_rules.py` draws the
+  line and `test_gate_rules.py` holds it there.
+- **Everything else still waits for Josh's `Gate-approved:` line** — which he
+  gives by pressing **Approve a held change** in Hub World's Josh menu, never by
+  editing anything on GitHub. See the hard rule directly below.
+- **NEVER write that line on his behalf.** PR #550's own history is why: a
+  session pasted the approval template into the description, the gate matched its
+  own keyword, and an unapproved change went through.
+- **The gate's own rules always stop for him** — `review_gate.py` and
+  `gate_rules.py` are on the hold list, because a gate whose keeper can edit the
+  lock is not a gate.
+- **Widening the exemption is Josh's call, never a session's.** It is meant to be
+  easier to widen later than to discover it was too loose.
+
+## HARD RULE — NEVER send Josh to GitHub to approve, edit, or unblock anything (2026-09-18)
+
+Josh, verbatim, after a session told him to open a pull request and edit its
+description: **"I will never open a GitHub repo like that 830, hit edit, and make
+changes there. I've never had to do that until a day or two ago. So whatever
+you're doing differently now, you need to solve. I'm sick and tired of this
+manual step in order for you to push. Never ask me to do that again in any
+session ever."**
+
+He was right that nothing had changed but the session. **The approve button has
+existed since 2026-09-17 and he has used it.** Two sessions in a row reached past
+it for a GitHub link instead. That is the failure this rule exists to stop.
+
+- **The gate is approved from Hub World. Full stop.** Josh menu → **Approve a held
+  change (n)**. The row appears only while something is actually held. His press
+  writes the `Gate-approved:` line itself, from his Mac, under his hand
+  (`approveGate()` in `hub-world/tools/serve.mjs`, tested by `gate.test.sh`).
+- **NEVER hand him a github.com link, a numbered "click Edit" recipe, or the text
+  of the approval line to paste.** Not as a fallback, not "in case it's quicker",
+  not in a different repo. If a session is about to type a GitHub URL at Josh so
+  he can change something there, it is already wrong.
+- **What Claude says instead, in one line:** *"Held on you — open Hub World, Josh
+  menu, Approve a held change."* Nothing more; he knows the button.
+- **This does NOT let Claude write the approval line.** That is still absolutely
+  forbidden (PR #550: a session pasted the template, the gate matched its own
+  keyword, an unapproved change went through) and `block-gate-approval.sh` blocks
+  it mechanically. The press is his; the routing to his own tool is Claude's job.
+- **If Hub World is not running or the button cannot show it**, that is a bug to
+  fix or a handoff to write — never a reason to fall back to GitHub.
+- **Same rule for everything else on GitHub.** Merging, re-running a job, editing
+  a title or description, resolving a conflict, answering a review: Claude does it
+  through the API or writes a handoff. Josh is never the button.
 <!-- END workspace-response-style -->
