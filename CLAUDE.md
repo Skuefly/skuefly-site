@@ -149,10 +149,28 @@ on these terms, which is why it is not an exception to the rule above but an app
   the missing data, never a filter someone has to remember to apply.
 - **One switch in Josh's menu hides the island**, its jobs and its counts before he shares a screen.
 - **This does not widen anything else.** No other app, connector, report, artifact or board may carry
-  personal content, and the pre-access audit above still runs before any person is granted any surface.
+  personal content (the one named exception is Josh's own ChatGPT, below), and the pre-access audit
+  above still runs before any person is granted any surface.
+
+**Josh's own ChatGPT may read personal repos (Josh, 2026-09-24, by chips).** It is his private
+assistant, not a surface another person sees, and most of his personal and lawsuit writing starts
+there. The ChatGPT GitHub app (ChatGPT Codex Connector) is installed on ALL Skuefly repos, personal
+and lawsuit included. Terms:
+- **His account only.** Never a shared ChatGPT workspace, a team plan, or anyone else's login.
+- **Model training off** in ChatGPT's Data controls.
+- **Through a shared connector only sealed (Josh, 2026-09-24, by chips: "same connector, just for you").**
+  The Tripletail Data connector's `save_to_repo` may carry a personal file for Josh's sign-in only, and
+  encrypts it before it touches skuefly-shared; only the Mac's private key
+  (`~/.config/skuefly/chatgpt-shelf-private.pem`) opens it, so the shared repo and its history hold
+  ciphertext only, and the server holds no key that reaches a personal repo. No other shared-connector
+  tool may carry personal content.
+- **Not a leak finding.** The weekly Chief and patrols do not flag this install; they DO flag it if the
+  install ever reaches a GitHub org, a shared workspace, or a second person.
+- **Lawsuit privilege is Josh's call with counsel.** Say so once if asked; never block on it.
 
 **"Seal X like personal" is a standing instruction Josh can give about BUSINESS work too** (first used
-2026-09-17, on the Sable and Moss brand concept). It means: content moves to `Skuefly/personal`, the shared
+2026-09-17 on Sable and Moss, and reversed there 2026-09-24: Josh called that seal a mistake, since Sable and
+Moss is a Tripletail venture, business like Cajo and Zola, just not launched). It means: content moves to `Skuefly/personal`, the shared
 repo and `OPEN-PROJECTS.md` keep nothing but the name, its row goes on the private board, and Hub World
 marks its hex `sealed: true` so it exists only where that repo can be cloned and never touches a business
 count (mechanics: `hub-world/DESIGN.md` → "A sealed hex"). **Git history is not sealed retroactively** — say
