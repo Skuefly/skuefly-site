@@ -111,6 +111,9 @@ Two hard rules for the board:
 - **Rows are written in Josh's language** — what the thing is in business terms and what
   he can do next ("say X in any session"), never PR/repo jargon (park identifiers in
   trailing parentheses for sessions).
+- **Check the project inbox on start.** `files/inbox/<this repo>.md` on main of
+  `Skuefly/skuefly-shared` lists files Josh filed to Drive that this project should use. Open lines are
+  work waiting. Tick them with `files/inbox-note.sh done` once used (rules/files.md, "Project inbox").
 - **Ideas must not evaporate.** If a conversation births an idea or exploration that
   doesn't become a repo/task by session end, PARK it under "Ideas & conversations" with
   one line + where the conversation lives. Capturing is the session's job, never Josh's
