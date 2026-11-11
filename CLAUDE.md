@@ -26,6 +26,30 @@ If you cannot push directly to `main`:
 The `claude/` branch prefix is required for auto-merge to trigger.
 
 <!-- BEGIN workspace-response-style (synced from skuefly-shared/response-style.md — do not edit here; run sync-style.sh) -->
+## Any AI agent, not just Claude (Codex, ChatGPT, others) — read this first
+
+This file is the rulebook for every agent. `AGENTS.md` in each repo is a link to `CLAUDE.md` (one file, no drift).
+Claude-only helpers do not exist for you; use the plain script. Scripts live in `skuefly-shared/` on Josh's Mac.
+
+| Claude has | You use instead |
+|---|---|
+| Skills (`wrap-it-up`, `file-it`, `add-competitor`) | Read `skuefly-shared/.claude/skills/<name>/SKILL.md`, follow it as text |
+| Shopify connector (retired) | Local: `skuefly-shared/shopify/shop-gql.sh cajo\|zola '<graphql>'`; cloud or 60-day-plus orders: `shopify/proxy-gql.sh` |
+| QuickBooks connector | `skuefly-shared/shopify/qbo.sh` |
+| Tickets and replies | `node hub-world/tools/hub-ticket.mjs`, `hub-reply.mjs` (dry run first; send only on Josh's "send") |
+| Kira work, meetings, projects | `hub-world/tools/kira-work.mjs`, `hub-meeting.mjs`, `kira-project-check.mjs` |
+| "work on 4" ticket numbers | `node hub-world/tools/shortlist.mjs 4` |
+| Hooks, `.claude/settings.json` | Ignored by you: obey the rules in words. The locks below are the hard stop |
+| The `/approvals` gate | Held change? Tell Josh: "approve it at https://hub.tripletailco.com/approvals". Never write the approval line |
+| Handoffs | `skuefly-shared/handoffs/check-waiting.sh`; protocol in `HANDOFF.md` |
+
+Rules unchanged for you: never send an email, ticket reply or text without Josh's "send" or "go"; live Shopify is the truth
+(pull and diff before any theme write); no Shopify order, payment or refund writes (`rules/shopify-orders.md`);
+personal repos never leave `Skuefly/personal`; no secrets in chat or files; merge your own green work; never send Josh to GitHub to click.
+
+### Locks every agent must respect
+(reserved: the server-locks work adds its rule text here)
+
 ## Who Josh is + the companies (context every session needs)
 
 - **Josh**: sole operator, NOT a developer (15 yrs editorial design, DMG Atlanta). He directs; Claude executes.
@@ -119,19 +143,16 @@ Two hard rules for the board:
   one line + where the conversation lives. Capturing is the session's job, never Josh's
   discipline. "Make it a project" promotes it.
 
-## Josh's short list by number (2026-09-20)
+## Josh's short list by number (2026-09-20, made permanent 2026-09-30)
 
-Every open board project has a number — his starred short list gets 1..N, everything else
-follows after it, straight through. He said it plainly: "Assign numbers or job tickets to
-every project ... especially the Short List ones ... work on 1-10."
+Every open board project has a permanent ticket, PRJ-n, assigned once and never reused or
+renumbered (Josh, 2026-09-30, by chips: "Permanent only"). "Work on 4" means ticket PRJ-4.
 
-- **A number is a POSITION on today's board, never a permanent ticket** (his call, by
-  chips) — it shifts the instant he stars or unstars something.
+- Tickets live in `project-tickets.json` on main; the old shifting 1..N positions are gone.
 - When Josh references a number ("work on 1-10", "what's 4", "park 7"): run
-  `node hub-world/tools/shortlist.mjs` FIRST — never guess from memory or an old list.
-- **Then name the projects back to him before doing anything.** A number is never acted on
-  silently — that's the deal that lets the numbers move. `--json` gives the same list for a
-  session that wants to act on it directly.
+  `node hub-world/tools/shortlist.mjs 4` (or `1-10`) FIRST — never guess from memory.
+- **Then name the projects back to him before doing anything.** Never act on a number silently.
+- A new project gets the next number when the script or the Hub first sees it; commit the file.
 
 ## HARD RULE — personal is sealed (Josh, 2026-07-28)
 
@@ -359,8 +380,18 @@ it for a GitHub link instead. That is the failure this rule exists to stop.
   of the approval line to paste.** Not as a fallback, not "in case it's quicker",
   not in a different repo. If a session is about to type a GitHub URL at Josh so
   he can change something there, it is already wrong.
-- **What Claude says instead, in one line:** *"Held on you — open Hub World, Josh
-  menu, Approve a held change."* Nothing more; he knows the button.
+- **What Claude says instead, in one line:** *"Held on you: approve it at
+  https://hub.tripletailco.com/approvals."* Nothing more; he knows the button. He does not
+  use Hub World (Josh, 2026-11-06: "I don't use HubWorld").
+- **A held change missing from that page = the approvals key cannot see the repo.** The key
+  (fine-grained token "Hub phone approvals", Fly `GATE_GITHUB_TOKEN`) lists repos one by one; a new
+  or recreated repo must be added to it (2026-11-06: the restarted money repos were missing).
+- **The phone door (Josh, 2026-09-27, by chips: "Hub + Face ID").** `/approvals` in
+  the Hub does the same press, confirmed by a passkey. A Hub login alone never
+  approves; a passkey is added only via a one-time link minted on the Mac
+  (`hub-remix/scripts/gate-enrol-link.mjs`). Its GitHub key (`GATE_GITHUB_TOKEN`)
+  covers business repos only, so personal holds stay Mac-only. Design:
+  `hub-remix/app/lib/gate.server.ts`.
 - **This does NOT let Claude write the approval line.** That is still absolutely
   forbidden (PR #550: a session pasted the template, the gate matched its own
   keyword, an unapproved change went through) and `block-gate-approval.sh` blocks
